@@ -10,28 +10,42 @@
  * }
  */
 
-function traverser(walk: ListNode) {
-	return walk.next;
-}
-
 function getIntersectionNode(
 	headA: ListNode | null,
 	headB: ListNode | null,
 ): ListNode | null {
-	let seen: Set<ListNode> = {};
+	let seen: ListNode[] = [];
 
 	let walkA: ListNode = headA;
 	let walkB: ListNode = headB;
 
-	while (walkA !== null && walkB !== null) {
+	while (walkA !== null || walkB !== null) {
 
-		if (seen.has(walkA.val)) {
+		let ans_node: ListNode | null = null;
 
+		if (walkA !== null) {
+			if (!seen.includes(walkA)) {
+				seen.push(walkA);
+				walkA = walkA.next;
+			}
+            else {
+			  ans_node = walkA
+            }
 		}
-		seen.add(walkA.val)
-		seen.add(walkB.val)
 
-		walkA = traverser(walkA);
-		walkB = traverser(walkB);
+		if (walkB !== null) {
+			if (!seen.includes(walkB)) {
+				seen.push(walkB);
+				walkB = walkB.next;
+			}
+			else {
+			  ans_node = walkB
+            }}
+
+        if (ans_node !== null) {
+            return ans_node
+        }
 	}
+
 }
+
